@@ -1,6 +1,6 @@
 # Aarya Vasantlal — Portfolio
 
-***text*** Open Sourcing for others to reference ***text***
+***Open Sourcing for others to reference*** 
 
 
 Production Astro 4 site. Editorial-paper design with bento layouts, self-hosted fonts, and a single React island for the rotating hero.
