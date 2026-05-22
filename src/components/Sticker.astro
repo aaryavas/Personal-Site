@@ -1,0 +1,12 @@
+---
+interface Props {
+  color?: 'butter' | 'mint' | 'lilac' | 'sky' | 'rose';
+  rotate?: number;
+  style?: string;
+}
+
+const { color = 'butter', rotate = -2, style } = Astro.props;
+const cls = `sticker${color !== 'butter' ? ` sticker--${color}` : ''}`;
+const inlineStyle = `transform: rotate(${rotate}deg);${style ? ` ${style}` : ''}`;
+---
+<span class={cls} style={inlineStyle}><slot /></span>

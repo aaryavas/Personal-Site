@@ -1,0 +1,329 @@
+/* ============================================================
+   AARYA VASANTLAL — PORTFOLIO DESIGN SYSTEM
+   Foundations: color, type, spacing, motion
+   ============================================================
+   PALETTE PHILOSOPHY
+   Mostly monochrome paper-and-ink. ONE warm pastel accent
+   (cornflower blue) carries everything that needs to pop. A small
+   set of "sticker" pastels (butter, mint, lilac, sky) appear
+   as tactile highlights, sticker/stamp motifs, and bento-tile
+   surfaces — never as gradients, never as full backgrounds.
+   ============================================================ */
+
+/* ----- Web fonts ----- */
+
+:root {
+  /* ---------- COLOR — base (night sky) ---------- */
+  --paper:        #050816;   /* deep midnight, main background */
+  --paper-2:      #0F1322;   /* slightly lifted surface        */
+  --paper-3:      #181E30;   /* recessed wells / deeper tiles  */
+  --paper-light:  #0E1220;   /* primary tile surface           */
+  --ink:          #F2ECDF;   /* warm cream, body text          */
+  --ink-2:        #B0BAC9;   /* secondary text                 */
+  --ink-3:        #7A8699;   /* tertiary text, meta            */
+  --ink-4:        #4A5568;   /* muted, placeholders            */
+  --rule:         #1F2438;   /* hairline borders               */
+  --rule-soft:    #141826;   /* softer hairline                */
+  --ink-blue:     #4A5670;   /* cool blue-grey for raised UI   */
+
+  /* ---------- COLOR — accent (the one) ---------- */
+  --accent:       #3D7BB8;   /* cornflower, primary accent     */
+  --accent-soft:  #93B6D8;   /* lighter cornflower             */
+  --accent-ink:   #93B6D8;   /* lightened for dark bg readability */
+  --accent-wash:  #D6E3F0;   /* pale sky wash, sticker fill    */
+
+  /* ---------- COLOR — sticker pastels (highlights only) ---------- */
+  --sticker-butter: #F2D78A;  /* highlight, "important" stamp  */
+  --sticker-mint:   #B8D4B2;  /* "in progress" / fresh         */
+  --sticker-lilac:  #C7BCDB;  /* "thinking" / theory tags      */
+  --sticker-sky:    #B5CCDE;  /* "data" / links / hovers       */
+  --sticker-rose:   #E8B5B5;  /* "note to self" / warnings     */
+
+  /* ---------- COLOR — semantic ---------- */
+  --bg:           var(--paper);
+  --surface:      var(--paper-light);
+  --surface-2:    var(--paper-2);
+  --fg:           var(--ink);
+  --fg-2:         var(--ink-2);
+  --fg-3:         var(--ink-3);
+  --fg-muted:     var(--ink-4);
+  --link:         var(--ink);
+  --link-hover:   var(--accent);
+  --border:       var(--rule);
+  --border-soft:  var(--rule-soft);
+  --focus:        var(--accent);
+
+  /* ---------- TYPE — families ---------- */
+  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', system-ui, sans-serif;
+  --font-serif:   'Space Mono', 'Helvetica Neue', monospace;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  --font-hand:    'Caveat', 'Comic Sans MS', cursive; /* for annotations */
+  --font-sign:    'Homemade Apple', 'Caveat', cursive; /* for the wordmark / signature */
+
+  /* ---------- TYPE — sizes (modular, 1.25) ---------- */
+  --size-xs:   12px;
+  --size-sm:   14px;
+  --size-base: 16px;
+  --size-md:   18px;
+  --size-lg:   22px;
+  --size-xl:   28px;
+  --size-2xl:  36px;
+  --size-3xl:  48px;
+  --size-4xl:  64px;
+  --size-5xl:  88px;
+  --size-6xl:  128px;
+
+  /* ---------- TYPE — leading ---------- */
+  --lh-tight: 1.02;
+  --lh-snug:  1.18;
+  --lh-norm:  1.45;
+  --lh-loose: 1.7;
+
+  /* ---------- TYPE — tracking ---------- */
+  --track-tight: -0.02em;
+  --track-norm:   0em;
+  --track-wide:   0.06em;
+  --track-caps:   0.14em;
+
+  /* ---------- SPACE ---------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ---------- RADIUS ---------- */
+  --r-0:   0;
+  --r-xs:  2px;
+  --r-sm:  4px;
+  --r-md:  8px;
+  --r-lg:  14px;
+  --r-xl:  22px;
+  --r-2xl: 32px;
+  --r-pill: 999px;
+
+  /* ---------- SHADOWS — flat, paper-aware ---------- */
+  --shadow-tile:    0 1px 0 var(--rule), 0 2px 0 -1px var(--rule-soft);
+  --shadow-press:   inset 0 2px 0 rgba(242,236,223,.08);
+  --shadow-sticker: 2px 3px 0 rgba(0,0,0,.35);
+  --shadow-paper:   0 1px 2px rgba(0,0,0,.12), 0 8px 24px -8px rgba(0,0,0,.25);
+  --shadow-hover:   3px 4px 0 var(--ink);
+
+  /* ---------- BORDERS ---------- */
+  --border-hairline: 1px solid var(--rule);
+  --border-rule:     1px solid var(--ink);
+  --border-thick:    2px solid var(--ink);
+
+  /* ---------- MOTION ---------- */
+  --ease-out: cubic-bezier(.2,.7,.2,1);
+  --ease-in-out: cubic-bezier(.7,0,.2,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+  --dur-quick: 120ms;
+  --dur-base:  220ms;
+  --dur-slow:  440ms;
+  --dur-stage: 800ms;
+}
+
+/* ============================================================
+   SEMANTIC TYPOGRAPHY
+   Use these classes for consistent type. Display = Bricolage,
+   body = Literata, code/notation = JetBrains, marginalia =
+   Caveat (hand).
+   ============================================================ */
+
+html, body { font-family: var(--font-serif); color: var(--fg); background: var(--bg); font-size: var(--size-base); line-height: var(--lh-norm); }
+
+.h-display, .h1, .h2, .h3, .h4, .h5, .eyebrow, .label {
+  font-family: var(--font-display);
+  color: var(--fg);
+}
+
+.h-display {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 12vw, var(--size-6xl));
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.04em;
+  font-variation-settings: "wdth" 100, "opsz" 96;
+}
+
+h1, .h1 {
+  font-size: var(--size-4xl);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
+}
+h2, .h2 {
+  font-size: var(--size-3xl);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--track-tight);
+}
+h3, .h3 {
+  font-size: var(--size-2xl);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--track-tight);
+}
+h4, .h4 {
+  font-size: var(--size-xl);
+  font-weight: 500;
+  line-height: var(--lh-snug);
+}
+h5, .h5 {
+  font-size: var(--size-lg);
+  font-weight: 500;
+  line-height: var(--lh-snug);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  font-weight: 500;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+p, .body {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--fg-2);
+  text-wrap: pretty;
+  letter-spacing: .01em;
+}
+
+.body-lg {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.lede {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.45;
+  font-weight: 400;
+  color: var(--accent-soft);
+  letter-spacing: .015em;
+}
+
+.meta, small {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  color: var(--fg-3);
+  letter-spacing: 0.02em;
+}
+
+code, .code, pre, kbd {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  color: var(--fg);
+}
+code {
+  background: var(--paper-2);
+  padding: 1px 6px;
+  border-radius: var(--r-xs);
+  border: var(--border-hairline);
+}
+
+.hand {
+  font-family: var(--font-hand);
+  font-weight: 500;
+  color: var(--accent-ink);
+  letter-spacing: 0.01em;
+}
+
+/* Math/notation flourish — used as ornament, not body math */
+.notation {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-feature-settings: "ss01" on, "ss02" on;
+  color: var(--fg-3);
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-quick) var(--ease-out);
+}
+a:hover { color: var(--link-hover); text-decoration-color: var(--accent); }
+
+::selection { background: var(--accent); color: var(--paper); }
+
+/* ============================================================
+   UTILITY MOTIFS
+   Paper texture, sticker, stamp, hairline rules.
+   ============================================================ */
+
+.paper {
+  background: var(--paper);
+}
+
+.tile {
+  background: var(--surface);
+  border: var(--border-hairline);
+  border-radius: var(--r-lg);
+  padding: var(--space-5);
+}
+
+.tile--ink {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.tile--ink * { color: inherit; }
+
+.sticker {
+  display: inline-block;
+  padding: 2px 10px;
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  background: var(--sticker-butter);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-sticker);
+  transform: rotate(-2deg);
+}
+
+.stamp {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  border: 2px solid var(--accent-ink);
+  border-radius: var(--r-xs);
+  transform: rotate(-6deg);
+  opacity: .85;
+}
+
+.rule {
+  border: 0;
+  border-top: var(--border-hairline);
+  margin: var(--space-6) 0;
+}
+.rule--ink { border-top: var(--border-rule); }
+.rule--dashed { border-top: 1px dashed var(--ink-3); }

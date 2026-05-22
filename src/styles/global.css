@@ -1,0 +1,24 @@
+@import './fonts.css';
+@import './tokens.css';
+@import './portfolio.css';
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 16px;
+  z-index: 100;
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

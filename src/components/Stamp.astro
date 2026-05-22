@@ -1,0 +1,10 @@
+---
+interface Props {
+  rotate?: number;
+  style?: string;
+}
+
+const { rotate = -5, style } = Astro.props;
+const inlineStyle = `transform: rotate(${rotate}deg);${style ? ` ${style}` : ''}`;
+---
+<span class="stamp" style={inlineStyle}><slot /></span>

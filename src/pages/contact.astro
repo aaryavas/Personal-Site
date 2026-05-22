@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import Tile from '../components/Tile.astro';
+import MathOrnament from '../components/MathOrnament.astro';
+---
+<BaseLayout title="Contact" description="Get in touch with Aarya Vasantlal. Email, phone, GitHub, LinkedIn, and CV download.">
+  <section>
+    <div class="kicker" style="margin-top: 24px;">contact &middot; say hello</div>
+    <h1 class="page-title">
+      I&rsquo;d love to <em>hear from you.</em>
+    </h1>
+    <p class="hero__dek" style="margin-top: 18px; max-width: 54ch;">
+      Research collabs, internships, weird agent ideas &mdash; all welcome. Email is fastest.
+    </p>
+
+    <div class="bento" style="margin-top: 40px;">
+      <!-- Email -->
+      <Tile href="mailto:aarya.vasantlal@proton.me" class="b-span-8 b-rows-3 tilt-1" ink>
+        <div class="meta">email &middot; best</div>
+        <div class="contact-email-heading">
+          aarya.vasantlal<br/>@proton.me
+        </div>
+        <div class="meta" style="margin-top: 14px;">I usually reply within a day or two.</div>
+      </Tile>
+
+      <!-- Phone -->
+      <Tile class="b-span-4 b-rows-3 tilt-2">
+        <div class="meta">phone &middot; maybe</div>
+        <div class="tile-heading-xl" style="margin-top: 8px;">
+          860 &middot; 571<br/>&middot; 1509
+        </div>
+        <div class="meta" style="margin-top: 12px;">text > call. EST.</div>
+      </Tile>
+
+      <!-- GitHub -->
+      <Tile href="https://github.com/aaryavas" class="b-span-4 b-rows-2 tilt-3">
+        <div class="meta">github &nearr;</div>
+        <div class="tile-heading-md" style="margin-top: 6px;">
+          @aaryavas
+        </div>
+        <div class="meta" style="margin-top: 10px;">open-source &middot; agents &middot; rust &middot; py</div>
+      </Tile>
+
+      <!-- LinkedIn -->
+      <Tile href="https://www.linkedin.com/in/aarya-vasantlal" class="b-span-4 b-rows-2 tilt-4">
+        <div class="meta">linkedin &nearr;</div>
+        <div class="tile-heading-md" style="margin-top: 6px;">
+          aarya-vasantlal
+        </div>
+        <div class="meta" style="margin-top: 10px;">1k followers &middot; 500+ connections</div>
+      </Tile>
+
+      <!-- CV -->
+      <Tile href="/cv.pdf" class="b-span-4 b-rows-2 tilt-1" style="background:#0C1629; border:1px solid var(--accent);">
+        <div class="meta" style="color:var(--accent-soft);">cv &middot; 2 pages &middot; pdf</div>
+        <div class="tile-heading-md" style="margin-top: 6px;">
+          Download CV
+        </div>
+        <div class="meta" style="margin-top: 10px; color:var(--accent-soft);">updated 2026&middot;02</div>
+      </Tile>
+    </div>
+
+    <!-- Signature -->
+    <div class="contact-farewell">
+      <div>
+        <div class="meta" style="margin-bottom: 20px;">thanks for stopping by</div>
+        <div class="contact-sig">
+          Aarya
+        </div>
+        <svg viewBox="0 0 220 14" width="220" height="14" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" style="opacity:.45; margin-left: 8px; margin-top: -8px;" aria-hidden="true">
+          <path d="M 4 8 C 80 4, 140 12, 200 7 C 210 5, 215 9, 218 7"/>
+        </svg>
+      </div>
+      <MathOrnament style="font-size: 36px; color:var(--ink-4);">&sum; thanks &rarr; &infin;</MathOrnament>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+title: "Terminal LLM Trainer"
+subtitle: "Finetune small LLMs without an ML background"
+blurb: "A TUI tool that automates synthetic data generation, VB-LoRA finetuning, and ORPO alignment — packaged for engineers who just want a model that calls their tools right."
+year: "2025"
+tags: ["LLMs", "HuggingFace", "TUI", "Python"]
+stamp: "open source"
+stickerColor: "mint"
+bullets:
+  - "Full TUI: synthetic data → SFT (VB-LoRA) → eval → ORPO alignment."
+  - "No separate RLHF reward model — ORPO chooses chosen/rejected pairs from prior gens."
+  - "Demo: finetuned SmolLM2-135M for MCP tool-calling (code_search, open_file, run_tests)."
+  - "Runs on consumer hardware."
+featured: true
+sortOrder: 2
+---
+
+I noticed friends building agents kept hitting the same wall: small open-source LLMs are great until they fumble tool calls. The fix is finetuning, but the ML pipeline is hostile to anyone who hasn't lived in it for years.
+
+Autotrainer wraps the whole workflow in a TUI: generate synthetic data, finetune with VB-LoRA (parameter-efficient, runs on consumer GPUs), evaluate with BERTScore/CodeBERTScore, then progressively align with ORPO — contrasting ground truth against the model's own prior generations.

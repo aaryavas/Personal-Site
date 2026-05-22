@@ -1,0 +1,25 @@
+---
+title: "MOPI-HFRS · A2C extension"
+subtitle: "Multi-objective RL for healthier food recommendations"
+blurb: "Extending a static GNN food recommender into a dynamic multi-objective system with A2C — jointly optimizing relevance and health across 8,170 users × 6,769 items."
+year: "2025"
+tags: ["RL", "A2C", "GNN", "PyTorch"]
+stamp: "1st place"
+stickerColor: "butter"
+accentMetric:
+  label: "health alignment"
+  from: "0.39"
+  to: "0.73"
+bullets:
+  - "Won 1st in UConn School of Computing College of Engineering Senior Design Competition (1 of 72)."
+  - "Discovered & corrected 3 evaluation bugs in original codebase."
+  - "Replaced REINFORCE → A2C with critic baseline + behavior-cloning warm start."
+  - "Per-step multi-objective reward: relevance + health-tag overlap."
+  - "Health alignment: 0.39 → 0.73 (slight tradeoff on preference alignment)."
+featured: true
+sortOrder: 1
+---
+
+Joint work with Dr. Chuxu Zhang. The original MOPI-HFRS paper reports A2C-style improvements on a static recommender — but it (a) used a high-variance REINFORCE policy gradient, (b) had three compounding evaluation bugs that misreported accuracy by over 50%, and (c) lacked any warm-start.
+
+I rebuilt the system with an A2C critic baseline, added behavioral-cloning pretraining, and designed a per-step multi-objective reward combining relevance and health-tag overlap. The corrected baseline matters as much as the result.

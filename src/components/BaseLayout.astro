@@ -1,0 +1,88 @@
+---
+import Head from './Head.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import StarField from './StarField.astro';
+import { ViewTransitions } from 'astro:transitions';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <Head title={title} description={description} ogImage={ogImage} />
+  <ViewTransitions />
+</head>
+<body>
+  <StarField />
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <div class="app">
+    <Nav />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </div>
+<script>
+  const GRIDS = ['bento', 'project-grid', 'research-threads-grid', 'publications-grid'];
+  const TEXT_TAGS = new Set(['P', 'H1', 'H2', 'H3']);
+  const TEXT_CLS = ['kicker', 'page-title', 'hero__title', 'hero__dek', 'section-title', 'research-section-title'];
+
+  function isGrid(el: Element) { return GRIDS.some(c => el.classList.contains(c)); }
+  function isText(el: Element) { return TEXT_TAGS.has(el.tagName) || TEXT_CLS.some(c => el.classList.contains(c)); }
+  function visible(el: HTMLElement) { return el.offsetHeight > 0; }
+
+  function collect(parent: HTMLElement): HTMLElement[] {
+    const out: HTMLElement[] = [];
+    for (const child of parent.children as Iterable<HTMLElement>) {
+      if (!visible(child) || child.classList.contains('scratch')) continue;
+      if (isGrid(child)) {
+        for (const gc of child.children as Iterable<HTMLElement>) {
+          if (visible(gc)) out.push(gc);
+        }
+      } else if (child.children.length > 0 && !child.classList.contains('tile') && child.tagName !== 'HR') {
+        out.push(...collect(child));
+      } else {
+        out.push(child);
+      }
+    }
+    return out;
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    const main = document.getElementById('main-content') as HTMLElement | null;
+    if (!main) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const targets = collect(main);
+    if (!targets.length) return;
+
+    const stagger = Math.min(100, Math.max(40, 900 / targets.length));
+    let prev: HTMLElement | null = null;
+
+    targets.forEach((el, i) => {
+      el.style.setProperty('--stream-delay', `${i * stagger}ms`);
+      el.classList.add('stream-in');
+
+      if (isText(el)) {
+        setTimeout(() => {
+          if (prev) prev.classList.remove('stream-cursor');
+          el.classList.add('stream-cursor');
+          prev = el;
+        }, i * stagger);
+      }
+    });
+
+    const end = (targets.length - 1) * stagger + 400;
+    setTimeout(() => { if (prev) prev.classList.remove('stream-cursor'); }, end);
+  });
+</script>
+</body>
+</html>

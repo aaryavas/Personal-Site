@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import Tile from '../components/Tile.astro';
+import MathOrnament from '../components/MathOrnament.astro';
+---
+<BaseLayout title="Now" description="What Aarya Vasantlal is reading, building, and thinking about right now.">
+  <section>
+    <div class="kicker" style="margin-top: 24px;">now &middot; what I&rsquo;m on lately</div>
+    <h1 class="page-title">
+      A working <em>set of obsessions.</em>
+    </h1>
+    <p class="hero__dek" style="margin-top: 18px; max-width: 54ch;">
+      Updated whenever something new sticks. Inspired by <a href="https://nownownow.com">nownownow.com</a>.
+    </p>
+
+    <div class="bento" style="margin-top: 44px;">
+      <!-- Reading -->
+      <Tile class="b-span-6 b-rows-3 tilt-1">
+        <div class="meta">reading</div>
+        <ul style="list-style:none; padding: 0; margin: 14px 0 0;">
+          <li class="reading-item">
+            <span class="tile-heading-sm">The Bitter Lesson</span>
+            <span class="tile-note">&mdash; Sutton, again</span>
+          </li>
+          <li class="reading-item">
+            <span class="tile-heading-sm">Sparks of AGI</span>
+            <span class="tile-note">&mdash; Bubeck et al.</span>
+          </li>
+          <li class="reading-item">
+            <span class="tile-heading-sm">The Pragmatic Programmer</span>
+            <span class="tile-note">&mdash; Hunt & Thomas</span>
+          </li>
+          <li class="reading-item">
+            <span class="tile-heading-sm">Three-Body</span>
+            <span class="tile-note">&mdash; Liu Cixin &middot; finally</span>
+          </li>
+        </ul>
+      </Tile>
+
+      <!-- Building -->
+      <Tile class="b-span-6 b-rows-3 tilt-2" ink>
+        <div class="meta">building</div>
+        <div style="margin-top: 14px; display:flex; flex-direction:column; gap: 14px;">
+          <div>
+            <div class="tile-heading-sm" style="color:var(--ink);">
+              MOPI-HFRS A2C extension
+            </div>
+            <div class="progress-row">
+              <div class="progress-bar"><div class="progress-bar__fill" style="width:84%;"></div><div class="progress-bar__empty"></div></div>
+              &middot; writing the paper
+            </div>
+          </div>
+          <div>
+            <div class="tile-heading-sm" style="color:var(--ink);">
+              Bug-report benchmark
+            </div>
+            <div class="progress-row">
+              <div class="progress-bar"><div class="progress-bar__fill" style="width:32%;"></div><div class="progress-bar__empty"></div></div>
+              &middot; eval harness
+            </div>
+          </div>
+        </div>
+      </Tile>
+
+      <!-- A thought -->
+      <Tile class="b-span-7 b-rows-2 tilt-3" accent>
+        <div class="meta" style="color:var(--accent-ink);">a thought</div>
+        <div class="tile-quote">
+          &ldquo;The most valuable artifact in ML research isn&rsquo;t the model.
+          It&rsquo;s the eval harness everyone else will use to argue with you.&rdquo;
+        </div>
+      </Tile>
+
+      <!-- Listening -->
+      <Tile class="b-span-5 b-rows-2 tilt-4">
+        <div class="meta">listening</div>
+        <ul class="tile-list">
+          <li>&middot; Dwarkesh Patel &mdash; anything Karpathy</li>
+          <li>&middot; No Priors</li>
+          <li>&middot; Latent Space</li>
+          <li>&middot; Mike Knoop talking ARC</li>
+        </ul>
+      </Tile>
+
+      <!-- Listening -->
+      <Tile class="b-span-4 b-rows-2 tilt-1 music-tile">
+        <div
+          class="music-bg"
+          aria-hidden="true"
+          style="background-image:url('https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02a1e867d40e7bb29ced5c0194')"
+        ></div>
+        <div class="meta music-meta">listening to</div>
+        <div class="music-inner">
+          <iframe
+            src="https://open.spotify.com/embed/track/2BJSMvOGABRxokHKB0OI8i?utm_source=generator&theme=0"
+            width="100%" height="80" frameborder="0" title="Shoota – Playboi Carti"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy" class="music-iframe"
+          ></iframe>
+        </div>
+      </Tile>
+
+      <!-- Writing next -->
+      <Tile class="b-span-4 b-rows-2 tilt-2">
+        <div class="meta">writing next</div>
+        <ul class="tile-list">
+          <li>&middot; post on debugging RL eval harnesses</li>
+          <li>&middot; short note on ORPO vs DPO in practice</li>
+          <li>&middot; thread on agent routing topologies</li>
+        </ul>
+      </Tile>
+
+      <!-- Snack -->
+      <Tile class="b-span-4 b-rows-2 tilt-3" style="background: #1A2029; border: 1px solid var(--sticker-mint);">
+        <div class="meta">snack</div>
+        <div class="tile-heading-sm" style="margin-top: 6px;">
+          A 135M SmolLM<br/>that finally calls tools right.
+        </div>
+        <div style="margin-top: 12px;">
+          <MathOrnament>&asymp; 95% acc.</MathOrnament>
+        </div>
+      </Tile>
+    </div>
+
+    <div class="meta" style="margin-top: 36px; text-align:right;">last updated &middot; 2026&middot;02&middot;11</div>
+  </section>
+</BaseLayout>
+
+<script>
+  // No interactive JS needed for music tile — embed is always visible
+</script>

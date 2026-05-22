@@ -1,0 +1,18 @@
+---
+interface Props {
+  date: string;
+  title: string;
+  dek: string;
+  href: string;
+}
+
+const { date, title, dek, href } = Astro.props;
+---
+<a href={href} class="row-link">
+  <span class="row-link__date">{date}</span>
+  <span>
+    <span class="row-link__title">{title}</span>
+    <span class="row-link__dek">{dek}</span>
+  </span>
+  <span class="row-link__arrow">&nearr;</span>
+</a>

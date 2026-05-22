@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import RotatingHero from '../components/RotatingHero.tsx';
+import ScratchpadBg from '../components/ScratchpadBg.astro';
+import MathOrnament from '../components/MathOrnament.astro';
+import Tile from '../components/Tile.astro';
+import Sticker from '../components/Sticker.astro';
+import Btn from '../components/Btn.astro';
+import RowLink from '../components/RowLink.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const featured = allProjects
+  .filter(p => p.data.featured)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
+  .slice(0, 4);
+---
+<BaseLayout title="Aarya Vasantlal" description="AI researcher and engineer working on agentic systems, RL alignment, and on-device voice models. UConn CSE '26.">
+  <!-- Full-page math scratchpad background -->
+  <ScratchpadBg density={52} class="scratch--page" />
+
+  <!-- HERO -->
+  <div class="hero" style="position: relative;">
+
+    <div class="hero__eyebrow">
+      <span class="dot"></span>
+      <span class="meta">currently &middot; Designing Agents @ UConn's Research Labs &middot; Incoming AI Researcher @ Lockheed Martin</span>
+    </div>
+
+    <h1 class="hero__title">
+      Hi, I&rsquo;m <em>Aarya</em>.<br/>
+      An AI{' '}
+      <RotatingHero
+        client:visible
+        words={['researcher.', 'builder.', 'debugger.', 'aligner.', 'tinkerer.']}
+      />
+    </h1>
+
+    <p class="hero__dek">
+      I currently work on <em>agentic AI for software engineering and tackle RL/DL systems. I publish, I build. Mostly I&rsquo;m here to learn out loud. I am 
+      exploring future research 
+      directions in mechanistic interpretability.
+    </p>
+
+    <div class="hero__cta">
+      <Btn variant="primary" href="/projects">See the work &rarr;</Btn>
+      <Btn href="/research">Research</Btn>
+      <Btn variant="ghost" href="/contact">say hi &nearr;</Btn>
+    </div>
+
+    <div class="hero__math">
+      <MathOrnament>&part;&Lscr;/&part;&theta; &rarr; 0</MathOrnament>
+    </div>
+  </div>
+
+  <!-- BENTO -->
+  <div class="bento" style="margin-top: 56px;">
+    <!-- About -->
+    <Tile class="b-span-7 b-rows-4 tilt-1" sticker>
+      <div class="meta" style="margin-bottom: 14px;">about &middot; 3rd person</div>
+      <p class="tile-body" style="margin: 0 0 14px;">
+        <strong style="font-weight: 600;">Aarya Vasantlal</strong> is an AI/ML Researcher and Engineer 
+        with a Bachelor of Science Engineering with a degree in Computer Science and Engineering 
+        at the University of Connecticut. They specialize in the design, training, and deployment of complex 
+        AI architectures, spanning Agentic Systems, Large Language Models (LLMs), Reinforcement Learning, and much more. 
+        Aarya's experience bridges production grade work with academic research; they have built on-device Voice 
+        AI and multi-agent routing architectures for over 60 tool calls in industry , won first place in UConn's Senior Design Competition for an Advantage 
+        Actor-Critic (A2C) recommendation system ,engineered multi-agent knowledge graph extraction pipelines for bioinformatic research, and much more. 
+        Complemented by full-stack development skills in TypeScript and React, as well as alignment experience with frontier models 
+        Aarya is a highly capable engineer targeting machine learning and working under the artificial intelligence umbrella term. 
+        Outside of their academic and career accomplishments, Aarya enjoys playing video games, basketball, and working out. 
+
+
+
+
+
+      </p>
+    </Tile>
+
+    <!-- Currently working -->
+    <Tile class="b-span-5 b-rows-2 tilt-2" ink>
+      <div class="meta" style="margin-bottom: 12px;">currently &middot; in progress</div>
+      <div class="tile-heading-lg">
+        Co-authoring a paper on <em style="font-family:var(--font-serif); font-weight:400; color:var(--accent-soft);">knowledge-graph extraction for bioinformatics experiments.</em>
+      </div>
+    </Tile>
+
+    <!-- GitHub -->
+    <Tile href="https://github.com/aaryavas" class="b-span-2 b-rows-2 tilt-3" style="display:flex; flex-direction:column; justify-content:space-between;">
+      <div class="meta">Code here &nearr;</div>
+      <div class="tile-heading-md" style="line-height: 1;">
+        github.com/<br/>aaryavas
+      </div>
+      <div class="meta"> py &middot; ts</div>
+    </Tile>
+
+    <!-- Featured project -->
+    <Tile href="/projects/mopi" class="b-span-3 b-rows-2 tilt-4" style="background:#1A2029; border:1px solid var(--sticker-mint); display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:visible;">
+      <div class="meta">featured</div>
+      <div class="sticker-float" style="position:absolute; right: -8px; top: -22px;">
+        <Sticker rotate={4} color="butter">1st place senior design</Sticker>
+      </div>
+      <div class="tile-heading-xl">MOPI-HFRS A2C</div>
+      <div class="meta">0.39 &rarr; 0.73</div>
+    </Tile>
+
+    <!-- Latest blog -->
+    <Tile href="/blog/three-bugs-and-a-baseline" class="b-span-7 b-rows-2 tilt-2">
+      <div class="kicker">latest blog &middot; 2026.05</div>
+      <div class="tile-heading-xl">
+        Three bugs and a baseline.
+      </div>
+      <div class="tile-note" style="margin-top: 6px;">
+        How a misreported accuracy by 50% turned into a senior-design win.
+      </div>
+    </Tile>
+
+    <!-- Building -->
+    <Tile href="/projects" class="b-span-5 b-rows-2 tilt-3" ink>
+      <div class="meta">building</div>
+      <div style="margin-top: 14px; display:flex; flex-direction:column; gap: 14px;">
+        <div>
+          <div class="tile-heading-sm">MOPI-HFRS A2C extension</div>
+          <div class="progress-row">
+            <div class="progress-bar"><div class="progress-bar__fill" style="width:84%;"></div><div class="progress-bar__empty"></div></div>
+            &middot; writing the paper
+          </div>
+        </div>
+        <div>
+          <div class="tile-heading-sm">Bug-report benchmark</div>
+          <div class="progress-row">
+            <div class="progress-bar"><div class="progress-bar__fill" style="width:32%;"></div><div class="progress-bar__empty"></div></div>
+            &middot; eval harness
+          </div>
+        </div>
+      </div>
+    </Tile>
+  </div>
+
+</BaseLayout>

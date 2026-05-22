@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import Sticker from '../../components/Sticker.astro';
+import Tag from '../../components/Tag.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+---
+<BaseLayout title="Work" description="Research, side-projects, and internships by Aarya Vasantlal.">
+  <section>
+    <div class="kicker" style="margin-top: 24px;">work &middot; 2024 &rarr; present</div>
+    <h1 class="page-title">
+      Things I&rsquo;ve <em>made, broken,</em><br/>
+      and re-made.
+    </h1>
+    <p class="hero__dek" style="margin-top: 18px; max-width: 54ch;">
+      Research, side-projects, internships. Roughly in reverse chronological order. The starred ones are the ones I&rsquo;d most like to talk about.
+    </p>
+
+    <div class="project-grid">
+      {projects.map((p, i) => {
+        const big = i === 0;
+        const isInk = i === 1;
+        return (
+          <a
+            href={`/projects/${p.slug}`}
+            class={`tile ${big ? 'project-card--hero' : 'project-card'} ${isInk ? 'tile--ink' : ''}`}
+            style="display:flex; flex-direction:column; justify-content:space-between; position:relative;"
+          >
+            {p.data.stamp && (
+              <span style="position:absolute; top:-8px; right:18px;">
+                <Sticker color={p.data.stickerColor || 'butter'} rotate={3}>{p.data.stamp}</Sticker>
+              </span>
+            )}
+            <div>
+              <div class="meta" style={isInk ? 'color:var(--ink-3);' : 'color:var(--ink-3);'}>{p.data.year} &middot; {p.data.tags.slice(0,2).join(' · ')}</div>
+              <div class={big ? 'project-card-title-hero' : 'tile-heading-md'} style="margin-top: 8px;">
+                {p.data.title}
+              </div>
+              <div class="tile-note" style={`margin-top: 6px; ${isInk ? 'color:var(--ink-3);' : ''}`}>
+                {p.data.subtitle}
+              </div>
+            </div>
+            {big && (
+              <div style="display:flex; gap: 8px; margin-top: 16px; flex-wrap:wrap;">
+                {p.data.tags.map(t => <Tag>{t}</Tag>)}
+              </div>
+            )}
+          </a>
+        );
+      })}
+    </div>
+  </section>
+</BaseLayout>

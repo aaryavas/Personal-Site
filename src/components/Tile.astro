@@ -1,0 +1,29 @@
+---
+interface Props {
+  href?: string;
+  ink?: boolean;
+  accent?: boolean;
+  sticker?: boolean;
+  class?: string;
+  style?: string;
+  [key: string]: any;
+}
+
+const { href, ink, accent, sticker, class: className, style, ...rest } = Astro.props;
+const cls = [
+  'tile',
+  ink && 'tile--ink',
+  accent && 'tile--accent',
+  sticker && 'tile--sticker',
+  className,
+].filter(Boolean).join(' ');
+---
+{href ? (
+  <a href={href} class={cls} style={style} {...rest}>
+    <slot />
+  </a>
+) : (
+  <div class={cls} style={style} {...rest}>
+    <slot />
+  </div>
+)}

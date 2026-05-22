@@ -1,0 +1,135 @@
+<canvas id="star-field" aria-hidden="true"></canvas>
+
+<style>
+  #star-field {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  function initStarField() {
+    const canvas = document.getElementById('star-field') as HTMLCanvasElement;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d')!;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const STAR_COUNT = 2400;
+    const ROTATION_SPEED = 0.000028;
+    const TWINKLE_SPEED = 0.003;
+
+    interface Star {
+      angle: number;  // azimuth on the dome
+      zenith: number; // 0 = directly overhead, 1 = horizon
+      r: number;
+      base: number;
+      phase: number;
+      speed: number;
+    }
+
+    let stars: Star[] = [];
+    let angle = 0;
+    let w = 0;
+    let h = 0;
+    let cx = 0;
+    let cy = 0;
+    let dome = 0; // dome radius in px
+    let raf = 0;
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cx = w / 2;
+      cy = h / 2;
+      dome = Math.sqrt(w * w + h * h) * 0.75;
+    }
+
+    function seed() {
+      stars = [];
+      for (let i = 0; i < STAR_COUNT; i++) {
+        const zenith = Math.pow(Math.random(), 0.7);
+        const tier = Math.random();
+        let r: number, base: number;
+        if (tier < 0.6) {
+          r = 0.3 + Math.random() * 0.4;
+          base = 0.2 + Math.random() * 0.2;
+        } else if (tier < 0.88) {
+          r = 0.7 + Math.random() * 0.5;
+          base = 0.35 + Math.random() * 0.25;
+        } else {
+          r = 1.1 + Math.random() * 0.7;
+          base = 0.55 + Math.random() * 0.35;
+        }
+        stars.push({
+          angle: Math.random() * Math.PI * 2,
+          zenith,
+          r: r * (0.6 + zenith * 0.6),
+          base,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.3 + Math.random() * 1.4,
+        });
+      }
+    }
+
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        const a = s.angle + angle;
+        const dist = s.zenith * dome;
+
+        const sx = Math.cos(a) * dist + cx;
+        const sy = Math.sin(a) * dist + cy;
+
+        if (sx < -6 || sx > w + 6 || sy < -6 || sy > h + 6) continue;
+
+        const twinkle = Math.sin(t * TWINKLE_SPEED * s.speed + s.phase);
+        const depthFade = 1 - s.zenith * 0.35;
+        const alpha = (s.base + twinkle * 0.35) * depthFade;
+        if (alpha <= 0) continue;
+
+        ctx.globalAlpha = Math.min(alpha, 1);
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      t++;
+      if (!reducedMotion) angle += ROTATION_SPEED;
+      raf = requestAnimationFrame(draw);
+    }
+
+    resize();
+    seed();
+    draw();
+
+    window.addEventListener('resize', () => {
+      resize();
+      seed();
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }
+
+  // Support Astro view transitions
+  let cleanup: (() => void) | undefined;
+  function start() {
+    cleanup?.();
+    cleanup = initStarField() ?? undefined;
+  }
+  start();
+  document.addEventListener('astro:page-load', start);
+</script>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="display:none">
+  <defs>
+
+    
+    <symbol id="ann-arrow-curve" viewBox="0 0 100 60" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 6 8 C 30 8, 56 10, 78 36"></path>
+      <path d="M 70 28 L 80 38 L 70 44"></path>
+    </symbol>
+
+    
+    <symbol id="ann-arrow-left" viewBox="0 0 100 30" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 94 15 L 8 15"></path>
+      <path d="M 18 8 L 6 15 L 18 22"></path>
+    </symbol>
+
+    
+    <symbol id="ann-circle" viewBox="0 0 120 60" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M 60 6 C 90 6, 116 16, 116 30 C 116 44, 90 54, 60 54 C 30 54, 4 44, 4 30 C 4 16, 30 6, 60 6 Z"></path>
+    </symbol>
+
+    
+    <symbol id="ann-underline" viewBox="0 0 200 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M 4 8 Q 24 2, 44 8 T 84 8 T 124 8 T 164 8 T 196 8"></path>
+    </symbol>
+
+    
+    <symbol id="ann-double-line" viewBox="0 0 200 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M 4 4 L 196 6"></path>
+      <path d="M 4 11 L 196 12"></path>
+    </symbol>
+
+    
+    <symbol id="ann-star" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 30 6 L 36 24 L 54 26 L 40 38 L 46 54 L 30 44 L 14 54 L 20 38 L 6 26 L 24 24 Z"></path>
+    </symbol>
+
+    
+    <symbol id="ann-asterisk" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+      <path d="M 20 4 L 20 36 M 6 12 L 34 28 M 6 28 L 34 12"></path>
+    </symbol>
+
+    
+    <symbol id="ann-bracket" viewBox="0 0 30 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 24 4 L 8 4 L 8 116 L 24 116"></path>
+    </symbol>
+
+    
+    <symbol id="ann-scribble" viewBox="0 0 100 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+      <path d="M 4 14 C 14 2, 20 22, 30 12 S 50 4, 60 16 S 80 4, 96 12"></path>
+    </symbol>
+
+    
+    <symbol id="ann-check" viewBox="0 0 40 30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 4 14 L 16 26 L 36 4"></path>
+    </symbol>
+
+    
+    <symbol id="ann-x" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+      <path d="M 4 4 L 26 26 M 26 4 L 4 26"></path>
+    </symbol>
+
+    
+    <symbol id="ann-pointer" viewBox="0 0 80 60" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 70 8 C 50 14, 30 22, 12 38"></path>
+      <path d="M 8 28 L 8 42 L 22 42"></path>
+    </symbol>
+
+  </defs>
+</svg>

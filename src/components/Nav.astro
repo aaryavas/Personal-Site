@@ -1,0 +1,90 @@
+---
+const pathname = Astro.url.pathname;
+const items = [
+  ['/projects', 'work'],
+  ['/research', 'research'],
+  ['/blog', 'blog'],
+  ['/now', 'now'],
+  ['/contact', 'contact'],
+] as const;
+
+function isActive(href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+}
+---
+<header class="nav" id="site-nav" transition:persist>
+  <div class="nav__brand-wrap">
+    <a href="/" class="nav__brand" aria-label="Home">
+      <span class="nav__sig">Aarya Vasantlal</span>
+    </a>
+    <span class="pin">&middot;&nbsp; cse '26 &nbsp;&middot;&nbsp; <span class="pin__uconn">UCONN</span></span>
+    <img src="/husky.png" alt="" class="nav__husky" aria-hidden="true" />
+  </div>
+  <nav class="nav__links" aria-label="Main navigation">
+    {items.map(([href, label]) => (
+      <a href={href}>{label}</a>
+    ))}
+  </nav>
+</header>
+
+<script>
+  function updateActive() {
+    const path = window.location.pathname;
+    document.querySelectorAll<HTMLAnchorElement>('.nav__links a').forEach(a => {
+      const href = a.getAttribute('href') ?? '';
+      const active = href === '/' ? path === '/' : path.startsWith(href);
+      a.classList.toggle('active', active);
+    });
+  }
+  updateActive();
+  document.addEventListener('astro:page-load', updateActive);
+
+  const nav = document.getElementById('site-nav');
+  const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 64);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const pin = document.querySelector<HTMLElement>('.pin__uconn');
+  const husky = document.querySelector<HTMLImageElement>('.nav__husky');
+  if (pin && husky) {
+    pin.addEventListener('mouseenter', () => {
+      husky.classList.remove('husky-out');
+      husky.classList.add('husky-in');
+    });
+    pin.addEventListener('mouseleave', () => {
+      husky.classList.remove('husky-in');
+      husky.classList.add('husky-out');
+      husky.addEventListener('animationend', () => husky.classList.remove('husky-out'), { once: true });
+    });
+  }
+
+  const sig = document.querySelector<HTMLSpanElement>('.nav__sig');
+  const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window || window.innerWidth <= 768;
+  if (sig && motionOk && !isTouch) {
+    const full = sig.textContent!;
+    let raf = 0;
+    sig.style.minWidth = sig.offsetWidth + 'px';
+
+    let typing = false;
+
+    sig.addEventListener('mouseenter', () => {
+      if (typing) return;
+      typing = true;
+      sig.textContent = '';
+      sig.classList.add('typing');
+      let i = 0;
+      const type = () => {
+        if (i <= full.length) {
+          sig.textContent = full.slice(0, i++);
+          raf = requestAnimationFrame(() => setTimeout(type, 45));
+        } else {
+          sig.classList.remove('typing');
+          typing = false;
+        }
+      };
+      type();
+    });
+  }
+</script>

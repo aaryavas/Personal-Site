@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Tile from '../../components/Tile.astro';
+import Sticker from '../../components/Sticker.astro';
+import Tag from '../../components/Tag.astro';
+import Btn from '../../components/Btn.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(p => ({
+    params: { slug: p.slug },
+    props: { project: p },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+const d = project.data;
+---
+<BaseLayout title={d.title} description={d.blurb} ogImage={`/og/projects/${project.slug}.png`}>
+  <section>
+    <Breadcrumbs items={[
+      { label: 'work', href: '/projects' },
+      { label: project.slug },
+    ]} />
+
+    <div class="project-detail-layout">
+      <div>
+        <div class="meta" style="margin-bottom: 12px;">{d.year} &middot; {d.tags.join(' · ')}</div>
+        <h1 class="page-title" style="margin: 0;">
+          {d.title}
+        </h1>
+        <p class="hero__dek" style="margin-top: 18px; max-width: 54ch;">{d.subtitle}</p>
+
+        <div class="article" style="margin: 24px 0 0;">
+          <Content />
+          <h2>Highlights</h2>
+          <ul class="tile-body-sm" style="line-height: 1.7; color:var(--ink-2); padding-left: 20px; margin: 0; list-style: disc;">
+            {d.bullets.map(b => <li style="margin-bottom: 6px;">{b}</li>)}
+          </ul>
+        </div>
+
+        <div style="margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap;">
+          <Btn variant="primary" href="https://github.com/aaryavas">View on GitHub &rarr;</Btn>
+          <Btn href="/projects">&larr; back to all work</Btn>
+        </div>
+      </div>
+
+      <aside>
+        <div style="position: sticky; top: 92px;">
+          {d.stamp && (
+            <div style="margin-bottom: 18px; display:flex; justify-content:flex-end;">
+              <Sticker color={d.stickerColor || 'butter'} rotate={-4}>{d.stamp}</Sticker>
+            </div>
+          )}
+
+          {d.accentMetric && (
+            <Tile accent style="margin-bottom: 14px;">
+              <div class="meta" style="color:var(--accent-ink);">{d.accentMetric.label}</div>
+              <div style="display:flex; align-items:baseline; gap: 12px; margin-top: 8px;">
+                <span class="metric-from">{d.accentMetric.from}</span>
+                <span style="font-family:var(--font-mono); font-size: 18px; color:var(--accent-ink);">&rarr;</span>
+                <span class="metric-to">{d.accentMetric.to}</span>
+              </div>
+            </Tile>
+          )}
+
+          <Tile>
+            <div class="meta">stack</div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
+              {d.tags.map(t => <Tag>{t}</Tag>)}
+            </div>
+          </Tile>
+
+          <Tile style="margin-top: 14px;">
+            <div class="meta">year</div>
+            <div class="tile-heading-xl" style="margin-top: 6px;">{d.year}</div>
+          </Tile>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

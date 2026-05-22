@@ -1,0 +1,10 @@
+---
+interface Props {
+  ink?: boolean;
+  style?: string;
+}
+
+const { ink, style } = Astro.props;
+const cls = `tag${ink ? ' tag--ink' : ''}`;
+---
+<span class={cls} style={style}><slot /></span>

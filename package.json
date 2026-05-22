@@ -1,0 +1,30 @@
+{
+  "name": "aarya-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@8.15.9",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^4.16.18",
+    "@astrojs/react": "^3.6.3",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/mdx": "^3.1.9",
+    "@astrojs/rss": "^4.0.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "lucide-astro": "^0.460.0",
+    "satori": "^0.12.0",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@astrojs/check": "^0.9.4",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1"
+  }
+}

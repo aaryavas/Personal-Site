@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Btn from '../../components/Btn.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map(p => ({
+    params: { slug: p.slug },
+    props: { post: p },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const d = post.data;
+---
+<BaseLayout title={d.title} description={d.dek} ogImage={`/og/blog/${post.slug}.png`}>
+  <section>
+    <Breadcrumbs items={[
+      { label: 'blog', href: '/blog' },
+      { label: post.slug },
+    ]} />
+    <article class="article">
+      <div class="meta">{d.date} &middot; {d.readTime} read &middot; {d.tags.join(' · ')}</div>
+      <h1>{d.title}</h1>
+      <p class="lede">{d.dek}</p>
+      <Content />
+      <hr class="rule" style="margin-top: 40px;" />
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 24px; gap: 16px; flex-wrap:wrap;">
+        <div class="meta">&mdash; Aarya, {d.date.split('·')[0]}</div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <Btn variant="ghost" href="/blog">&larr; all blogs</Btn>
+          <Btn href="https://github.com/aaryavas">check out on github &rarr;</Btn>
+        </div>
+      </div>
+    </article>
+  </section>
+</BaseLayout>

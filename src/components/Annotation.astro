@@ -1,0 +1,52 @@
+---
+type Kind = 'arrow-curve' | 'arrow-left' | 'circle' | 'underline' | 'scribble' | 'star' | 'asterisk' | 'check';
+
+interface Props {
+  kind?: Kind;
+  color?: string;
+  w?: number;
+  h?: number;
+  rotate?: number;
+  style?: string;
+}
+
+const { kind = 'arrow-curve', color, w = 100, h = 60, rotate = 0, style } = Astro.props;
+
+const paths: Record<Kind, string> = {
+  'arrow-curve': '<path d="M 6 8 C 30 8, 56 10, 78 36"/><path d="M 70 28 L 80 38 L 70 44"/>',
+  'arrow-left': '<path d="M 94 15 L 8 15"/><path d="M 18 8 L 6 15 L 18 22"/>',
+  'circle': '<path d="M 60 6 C 90 6, 116 16, 116 30 C 116 44, 90 54, 60 54 C 30 54, 4 44, 4 30 C 4 16, 30 6, 60 6 Z"/>',
+  'underline': '<path d="M 4 8 Q 24 2, 44 8 T 84 8 T 124 8 T 164 8 T 196 8"/>',
+  'scribble': '<path d="M 4 14 C 14 2, 20 22, 30 12 S 50 4, 60 16 S 80 4, 96 12"/>',
+  'star': '<path d="M 30 6 L 36 24 L 54 26 L 40 38 L 46 54 L 30 44 L 14 54 L 20 38 L 6 26 L 24 24 Z"/>',
+  'asterisk': '<path d="M 20 4 L 20 36 M 6 12 L 34 28 M 6 28 L 34 12"/>',
+  'check': '<path d="M 4 14 L 16 26 L 36 4"/>',
+};
+
+const viewBoxes: Record<Kind, string> = {
+  'arrow-curve': '0 0 100 60',
+  'arrow-left': '0 0 100 30',
+  'circle': '0 0 120 60',
+  'underline': '0 0 200 12',
+  'scribble': '0 0 100 24',
+  'star': '0 0 60 60',
+  'asterisk': '0 0 40 40',
+  'check': '0 0 40 30',
+};
+
+const inlineStyle = `transform: rotate(${rotate}deg);${style ? ` ${style}` : ''}`;
+---
+<svg
+  viewBox={viewBoxes[kind]}
+  width={w}
+  height={h}
+  fill="none"
+  stroke={color || 'currentColor'}
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="draw"
+  style={inlineStyle}
+  aria-hidden="true"
+  set:html={paths[kind]}
+/>

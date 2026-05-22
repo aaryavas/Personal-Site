@@ -1,0 +1,23 @@
+/* Preview card scaffolding only — content is the star */
+@import url('../colors_and_type.css');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 22% 30%, rgba(26,24,20,.025) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 78%, rgba(26,24,20,.022) 0 1px, transparent 1.5px);
+  background-size: 9px 9px, 15px 15px;
+  overflow: hidden;
+}
+
+.card {
+  padding: 24px 28px;
+  box-sizing: border-box;
+}
+
+/* shared row helpers */
+.row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+.between { display: flex; justify-content: space-between; align-items: center; }

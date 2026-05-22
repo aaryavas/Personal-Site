@@ -1,0 +1,21 @@
+---
+title: "On-device Voice AI · Savant"
+subtitle: "Local GPT-4o-style conversation, no cloud"
+blurb: "Replicating advanced conversational AI on-device with limited compute: a multi-agent architecture managing 60+ tool calls, a semantic router, and finetuned SLMs."
+year: "2025"
+tags: ["Voice", "SLM", "Whisper", "RAG"]
+stamp: "shipped"
+stickerColor: "sky"
+bullets:
+  - "Independently spearheaded end-to-end development."
+  - "Multi-agent architecture managing 60+ complex tool calls."
+  - "Whisper STT + custom model2vec embeddings + classifier router."
+  - "Vector DB w/ RAG for chat-history context."
+  - "Finetuned CSMs to up to 95% accuracy per use case with natural speech."
+featured: true
+sortOrder: 3
+---
+
+Six months at Savant building a Voice AI model end-to-end. The constraint: it had to run on-device — no cloud calls, no GPT-4o at runtime.
+
+I designed a multi-agent system that intelligently routes user queries to specialized lightweight SLM agents, with OpenAI Whisper handling speech-to-text and a custom model2vec embedding classifier doing the routing. A RAG-backed vector DB carries chat history for context.

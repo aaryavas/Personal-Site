@@ -1,0 +1,58 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = ogImage
+  ? new URL(ogImage, Astro.site).href
+  : new URL('/og/index.png', Astro.site).href;
+const isHome = Astro.url.pathname === '/';
+const fullTitle = isHome ? title : `${title} | Aarya Vasantlal`;
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="alternate" type="application/rss+xml" title="Aarya Vasantlal" href="/rss.xml" />
+
+<!-- Open Graph -->
+<meta property="og:type" content={isHome ? 'website' : 'article'} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:site_name" content="Aarya Vasantlal" />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+<!-- Font preloads handled by Astro CSS bundling -->
+
+<!-- Analytics: replace with Plausible/Fathom/Umami script -->
+
+{isHome && (
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Aarya Vasantlal",
+    "url": Astro.site,
+    "jobTitle": "AI Researcher",
+    "affiliation": { "@type": "Organization", "name": "University of Connecticut" },
+    "sameAs": [
+      "https://github.com/aaryavas",
+      "https://www.linkedin.com/in/aarya-vasantlal"
+    ]
+  })} />
+)}

@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import Tag from '../../components/Tag.astro';
+import RowLink from '../../components/RowLink.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => {
+    const da = a.data.date.replace(/·/g, '-');
+    const db = b.data.date.replace(/·/g, '-');
+    return new Date(db).getTime() - new Date(da).getTime();
+  });
+---
+<BaseLayout title="Essays" description="Short essays on AI research, agents, and building things by Aarya Vasantlal.">
+  <section>
+    <div class="kicker" style="margin-top: 24px;">blog &middot; informal</div>
+    <h1 class="page-title">
+      Thinking out loud<br/>
+      <em>about whatever I&rsquo;m building.</em>
+    </h1>
+    <p class="hero__dek" style="margin-top: 18px; max-width: 56ch;">
+        Blogs; usually about something I&rsquo;ve just figured out, just gotten wrong, or thinking about. 
+     
+    </p>
+
+    <div style="margin-top: 36px;">
+      {posts.map(p => (
+        <div data-post data-tags={p.data.tags.join(',')}>
+          <RowLink
+            date={p.data.date}
+            title={p.data.title}
+            dek={p.data.dek}
+            href={`/blog/${p.slug}`}
+          />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <script>
+    function initFilter() {
+      const filterBtns = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+      const postItems = document.querySelectorAll<HTMLElement>('[data-post]');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const active = btn.dataset.filter!;
+
+          filterBtns.forEach(b => {
+            b.classList.toggle('tag--ink', b === btn);
+          });
+
+          postItems.forEach(item => {
+            const tags = (item.dataset.tags ?? '').split(',');
+            item.style.display = (active === 'all' || tags.includes(active)) ? '' : 'none';
+          });
+        });
+      });
+    }
+
+    document.addEventListener('astro:page-load', initFilter);
+  </script>

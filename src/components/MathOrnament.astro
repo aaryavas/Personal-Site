@@ -1,0 +1,9 @@
+---
+interface Props {
+  style?: string;
+}
+
+const { style } = Astro.props;
+const inlineStyle = `font-style: italic; font-feature-settings: "ss01" on;${style ? ` ${style}` : ''}`;
+---
+<span class="notation" style={inlineStyle} aria-hidden="true"><slot /></span>

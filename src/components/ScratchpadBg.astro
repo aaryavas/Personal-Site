@@ -1,0 +1,54 @@
+---
+interface Props {
+  density?: number;
+  class?: string;
+}
+
+const { density = 14, class: className } = Astro.props;
+const glyphs = [
+  // core calculus / optimisation
+  '∑', '∂', '∇', '∫', '∏',
+  // greek staples
+  'θ', 'α', 'β', 'γ', 'λ', 'μ', 'σ', 'τ', 'ε', 'η', 'π', 'ω', 'ξ', 'ρ',
+  // RL / DL expressions
+  '≈', '→', '∞', '‖', '⊤',
+  // inline shorthand (rendered as text glyphs)
+  'softmax', 'ReLU', 'tanh', 'argmax', 'log p',
+];
+
+// Seeded PRNG for deterministic builds
+let seed = 42;
+function rand(): number {
+  seed = (seed * 1664525 + 1013904223) & 0x7fffffff;
+  return seed / 0x7fffffff;
+}
+
+interface DotItem { type: 'dot'; top: number; left: number; op: number }
+interface GlyphItem { type: 'glyph'; top: number; left: number; size: number; rot: number; char: string }
+type Item = DotItem | GlyphItem;
+
+const items: Item[] = [];
+
+for (let i = 0; i < density; i++) {
+  items.push({ type: 'dot', top: rand() * 100, left: rand() * 100, op: 0.06 + rand() * 0.15 });
+}
+for (let i = 0; i < Math.floor(density / 2); i++) {
+  items.push({
+    type: 'glyph',
+    top: rand() * 100,
+    left: rand() * 100,
+    size: 14 + rand() * 20,
+    rot: rand() * 30 - 15,
+    char: glyphs[Math.floor(rand() * glyphs.length)],
+  });
+}
+---
+<div class={`scratch${className ? ' ' + className : ''}`} aria-hidden="true">
+  {items.map((it) =>
+    it.type === 'dot' ? (
+      <span class="dot" style={`top:${it.top}%;left:${it.left}%;opacity:${it.op}`} />
+    ) : (
+      <span class="glyph" style={`top:${it.top}%;left:${it.left}%;font-size:${it.size}px;transform:rotate(${it.rot}deg)`}>{it.char}</span>
+    )
+  )}
+</div>
