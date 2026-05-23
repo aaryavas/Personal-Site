@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
 import Tile from '../components/Tile.astro';
-import MathOrnament from '../components/MathOrnament.astro';
 ---
 <BaseLayout title="Now" description="What Aarya Vasantlal is reading, building, and thinking about right now.">
   <section>
@@ -37,8 +36,27 @@ import MathOrnament from '../components/MathOrnament.astro';
         </ul>
       </Tile>
 
+      <!-- News -->
+      <Tile class="b-span-6 b-rows-3 tilt-2 news-tile" style="position:relative; overflow:hidden;">
+        <div style="position:absolute; inset:0; background:url('/grad.jpg') 20% 60%/cover no-repeat; opacity:0.35;"></div>
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, var(--paper-light) 0%, transparent 60%);"></div>
+        <div style="position:relative; z-index:1;">
+          <div class="meta">news</div>
+          <div class="tile-heading-lg" style="margin-top: 8px;">Just Graduated! 🎓</div>
+        </div>
+      </Tile>
+
+      <!-- A quote -->
+      <Tile class="b-span-7 b-rows-2 tilt-3" accent>
+        <div class="meta" style="color:var(--accent-ink);">a quote</div>
+        <div class="tile-quote">
+          &ldquo;Don&rsquo;t let anyone tell you, you can&rsquo;t do something.&rdquo;
+        </div>
+        <div class="meta" style="margin-top: 8px; color:var(--accent-ink);">&mdash; The Pursuit of Happyness</div>
+      </Tile>
+
       <!-- Building -->
-      <Tile class="b-span-6 b-rows-3 tilt-2" ink>
+      <Tile class="b-span-5 b-rows-2 tilt-4" ink>
         <div class="meta">building</div>
         <div style="margin-top: 14px; display:flex; flex-direction:column; gap: 14px;">
           <div>
@@ -62,26 +80,6 @@ import MathOrnament from '../components/MathOrnament.astro';
         </div>
       </Tile>
 
-      <!-- A thought -->
-      <Tile class="b-span-7 b-rows-2 tilt-3" accent>
-        <div class="meta" style="color:var(--accent-ink);">a thought</div>
-        <div class="tile-quote">
-          &ldquo;The most valuable artifact in ML research isn&rsquo;t the model.
-          It&rsquo;s the eval harness everyone else will use to argue with you.&rdquo;
-        </div>
-      </Tile>
-
-      <!-- Listening -->
-      <Tile class="b-span-5 b-rows-2 tilt-4">
-        <div class="meta">listening</div>
-        <ul class="tile-list">
-          <li>&middot; Dwarkesh Patel &mdash; anything Karpathy</li>
-          <li>&middot; No Priors</li>
-          <li>&middot; Latent Space</li>
-          <li>&middot; Mike Knoop talking ARC</li>
-        </ul>
-      </Tile>
-
       <!-- Listening -->
       <Tile class="b-span-4 b-rows-2 tilt-1 music-tile">
         <div
@@ -89,7 +87,7 @@ import MathOrnament from '../components/MathOrnament.astro';
           aria-hidden="true"
           style="background-image:url('https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02a1e867d40e7bb29ced5c0194')"
         ></div>
-        <div class="meta music-meta">listening to</div>
+        <div class="meta music-meta">listening </div>
         <div class="music-inner">
           <iframe
             src="https://open.spotify.com/embed/track/2BJSMvOGABRxokHKB0OI8i?utm_source=generator&theme=0"
@@ -100,24 +98,23 @@ import MathOrnament from '../components/MathOrnament.astro';
         </div>
       </Tile>
 
-      <!-- Writing next -->
+      <!-- Thinking About -->
       <Tile class="b-span-4 b-rows-2 tilt-2">
-        <div class="meta">writing next</div>
+        <div class="meta">thinking about</div>
         <ul class="tile-list">
-          <li>&middot; post on debugging RL eval harnesses</li>
-          <li>&middot; short note on ORPO vs DPO in practice</li>
-          <li>&middot; thread on agent routing topologies</li>
+
+          <li>&middot; for model alignment is it more ideal to address it during training instead of post-training behavior alignment?</li>
+          <li>&middot; will AI safety always be a point of debate as the world holds different definitions of morality and risk?</li>
         </ul>
       </Tile>
 
-      <!-- Snack -->
-      <Tile class="b-span-4 b-rows-2 tilt-3" style="background: #1A2029; border: 1px solid var(--sticker-mint);">
-        <div class="meta">snack</div>
-        <div class="tile-heading-sm" style="margin-top: 6px;">
-          A 135M SmolLM<br/>that finally calls tools right.
-        </div>
-        <div style="margin-top: 12px;">
-          <MathOrnament>&asymp; 95% acc.</MathOrnament>
+      <!-- Playing -->
+      <Tile class="b-span-4 b-rows-2 tilt-3" style="position:relative; overflow:hidden; border:1px solid #E87A20;">
+        <div style="position:absolute; inset:0; background:linear-gradient(135deg, #0A0A0A 0%, #1A0E00 40%, #E87A20 100%); opacity:0.45; z-index:0;"></div>
+        <div style="position:relative; z-index:1;">
+          <div class="meta">playing</div>
+          <div class="tile-heading-sm" style="margin-top: 8px;">Overwatch 2</div>
+          <div class="tile-note" style="margin-top: 8px;">Currently maining Sierra.</div>
         </div>
       </Tile>
     </div>

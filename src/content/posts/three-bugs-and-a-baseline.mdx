@@ -1,15 +1,31 @@
 ---
 title: "Three bugs and a baseline."
 dek: "How a misreported accuracy by 50% turned into a senior-design win."
-date: "2025·11·18"
-readTime: "8 min"
+date: "2026·05·20"
+readTime: "2 min"
 tags: ["rl", "evals"]
 ---
 
-I'm finishing my senior project this semester — extending MOPI-HFRS, a graph-neural-net food recommender, into a dynamic multi-objective system with A2C reinforcement learning. The paper's numbers were good. The code was suspicious.
+I'm finishing my senior project this semester, extending MOPI-HFRS, a graph-neural-net food recommender, 
+into a dynamic multi-objective system with A2C reinforcement learning. 
+The paper's numbers were good. The code was a mess and was hard to follow.
 
-By week three, I'd found three compounding evaluation bugs in the original codebase. Each one inflated accuracy in a slightly different way. Stacked, they misreported the model by over 50%. The headline result was, frankly, not real.
+Near the end of the semester, I was scrambling stuck on why results were so low and why the RL loop was properly learning a behavior.
+ I ended up manually finding three compounding evaluation bugs in the original codebase. 
+Each one inflated accuracy in a slightly different way. 
+Specifically, the bugs were... 
+Stacked, they misreported the model by over 50%. 
+The headline result was, frankly, not real.
 
-> The interesting part wasn't the bugs themselves — anyone digging hard enough finds them. The interesting part was that fixing them gave us a real baseline that the new method could honestly beat. Health alignment 0.39 → 0.73. Slight tradeoff on preference. Clean win.
+> The interesting part wasn't the bugs themselves, anyone digging hard enough or doing rigorous research work could find them. 
+The interesting part was that fixing them gave us a real baseline that the new method could honestly beat. 
+Health alignment 0.39 → 0.73. Slight tradeoff on preference. Clean win. Not only that, but the metrics essientially doubled, 
+proving the original paper methodology stronger than expected.
 
-There's a lesson in here I keep coming back to: in ML research, the most valuable artifact you produce isn't the model. It's the eval harness everyone else will use to argue with you. Get the harness right, and the rest is downstream.
+There's a lesson in here I keep coming back to: in ML research, 
+the most valuable artifact you produce isn't the model. 
+It's the eval harness everyone else will use to argue with you. 
+Get the harness right, and the rest is downstream. 
+
+I believe this is translated strongly to evals for LLMs. Eval harnesses argue a strong position on model performance and are used widely for capability scoring.
+However, based on my own use case, the popular benchmarks seem unfaithful. This is a research direction I am curious to explore to validate the claim.

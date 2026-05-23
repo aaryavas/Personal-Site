@@ -334,8 +334,8 @@ button.tag:active { transform: translate(0,0); box-shadow: 0 0 0 transparent; }
   .b-span-2, .b-span-3, .b-span-4, .b-span-5, .b-span-6, .b-span-7, .b-span-8 { grid-column: span 1; }
   .b-rows-2, .b-rows-3, .b-rows-4 { grid-row: span 1; }
   .tilt-1, .tilt-2, .tilt-3, .tilt-4 { transform: none; }
-  /* hide floating sticker so it doesn't bleed into adjacent tiles */
   .bento .sticker-float { display: none; }
+  .news-tile { min-height: 200px; }
 
   .tile { padding: 18px; }
 
