@@ -8,6 +8,7 @@
     height: 100%;
     z-index: 0;
     pointer-events: none;
+    will-change: transform;
   }
 </style>
 
@@ -19,12 +20,12 @@
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const STAR_COUNT = 2400;
-    const ROTATION_SPEED = 0.000028;
-    const TWINKLE_SPEED = 0.003;
+    const ROTATION_SPEED = 0.01;     // rad/sec
+    const TWINKLE_SPEED = 0.18;      // per sec
 
     interface Star {
-      angle: number;  // azimuth on the dome
-      zenith: number; // 0 = directly overhead, 1 = horizon
+      angle: number;
+      zenith: number;
       r: number;
       base: number;
       phase: number;
@@ -32,22 +33,28 @@
     }
 
     let stars: Star[] = [];
-    let angle = 0;
     let w = 0;
     let h = 0;
     let cx = 0;
     let cy = 0;
-    let dome = 0; // dome radius in px
+    let dome = 0;
+    let dpr = 1;
     let raf = 0;
+    const isTouch = matchMedia('(pointer: coarse)').matches;
 
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio, 2);
-      w = window.innerWidth;
-      h = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio, 2);
+      const newW = window.innerWidth;
+      const newH = window.innerHeight;
+
+      // On iOS Safari, address bar show/hide fires resize with same width
+      // but different height. Skip these to keep stars stable on scroll.
+      if (w > 0 && newW === w) return;
+
+      w = newW;
+      h = newH;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
-      canvas.style.width = w + 'px';
-      canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       cx = w / 2;
       cy = h / 2;
@@ -81,19 +88,26 @@
       }
     }
 
-    let t = 0;
+    const t0 = performance.now();
     function draw() {
-      ctx.clearRect(0, 0, w, h);
+      const t = (performance.now() - t0) / 1000;
+
+      if (isTouch) {
+        canvas.width = w * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      } else {
+        ctx.clearRect(0, 0, w, h);
+      }
 
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
-        const a = s.angle + angle;
+        const a = s.angle + (reducedMotion ? 0 : t * ROTATION_SPEED);
         const dist = s.zenith * dome;
 
         const sx = Math.cos(a) * dist + cx;
         const sy = Math.sin(a) * dist + cy;
 
-        if (sx < -6 || sx > w + 6 || sy < -6 || sy > h + 6) continue;
+        if (sx < -6 || sx > w + 6 || sy < -6 || sy > h + 120) continue;
 
         const twinkle = Math.sin(t * TWINKLE_SPEED * s.speed + s.phase);
         const depthFade = 1 - s.zenith * 0.35;
@@ -107,8 +121,6 @@
         ctx.fill();
       }
 
-      t++;
-      if (!reducedMotion) angle += ROTATION_SPEED;
       raf = requestAnimationFrame(draw);
     }
 
@@ -118,7 +130,6 @@
 
     window.addEventListener('resize', () => {
       resize();
-      seed();
     });
 
     return () => cancelAnimationFrame(raf);
