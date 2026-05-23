@@ -20,9 +20,6 @@ dependencies:
   astro:
     specifier: ^4.16.18
     version: 4.16.19(typescript@5.9.3)
-  gifuct-js:
-    specifier: ^2.1.2
-    version: 2.1.2
   lucide-astro:
     specifier: ^0.460.0
     version: 0.460.0(astro@4.16.19)
@@ -2177,12 +2174,6 @@ packages:
     engines: {node: '>=18'}
     dev: false
 
-  /gifuct-js@2.1.2:
-    resolution: {integrity: sha512-rI2asw77u0mGgwhV3qA+OEgYqaDn5UNqgs+Bx0FGwSpuqfYn+Ir6RQY5ENNQ8SbIiG/m5gVa7CD5RriO4f4Lsg==}
-    dependencies:
-      js-binary-schema-parser: 2.0.3
-    dev: false
-
   /github-slugger@2.0.0:
     resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
     dev: false
@@ -2473,10 +2464,6 @@ packages:
     engines: {node: '>=16'}
     dependencies:
       is-inside-container: 1.0.0
-    dev: false
-
-  /js-binary-schema-parser@2.0.3:
-    resolution: {integrity: sha512-xezGJmOb4lk/M1ZZLTR/jaBHQ4gG/lqQnJqdIv4721DMggsa1bDVlHXNeHYogaIEHD9vCRv0fcL4hMA+Coarkg==}
     dev: false
 
   /js-tokens@4.0.0:
