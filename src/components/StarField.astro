@@ -42,12 +42,17 @@
 
     function resize() {
       const dpr = Math.min(window.devicePixelRatio, 2);
-      w = window.innerWidth;
-      h = window.innerHeight;
+      const newW = window.innerWidth;
+      const newH = window.innerHeight;
+
+      // On iOS Safari, address bar show/hide fires resize with same width
+      // but different height. Skip these to keep stars stable on scroll.
+      if (w > 0 && newW === w) return;
+
+      w = newW;
+      h = newH;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
-      canvas.style.width = w + 'px';
-      canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       cx = w / 2;
       cy = h / 2;
@@ -93,7 +98,7 @@
         const sx = Math.cos(a) * dist + cx;
         const sy = Math.sin(a) * dist + cy;
 
-        if (sx < -6 || sx > w + 6 || sy < -6 || sy > h + 6) continue;
+        if (sx < -6 || sx > w + 6 || sy < -6 || sy > h + 120) continue;
 
         const twinkle = Math.sin(t * TWINKLE_SPEED * s.speed + s.phase);
         const depthFade = 1 - s.zenith * 0.35;
