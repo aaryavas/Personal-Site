@@ -262,7 +262,7 @@ button.tag:active { transform: translate(0,0); box-shadow: 0 0 0 transparent; }
 .progress-bar__empty { background:transparent; height:100%; flex:1; }
 
 .contact-email-heading { font-family:var(--font-display); font-size:clamp(26px,6vw,44px); font-weight:600; letter-spacing:-.025em; line-height:1.05; margin-top:8px; word-break:break-all; }
-.contact-sig           { font-family:'Homemade Apple',cursive; font-size:clamp(36px,9vw,64px); color:var(--ink); line-height:1; letter-spacing:.005em; }
+.contact-sig           { font-family:'Homemade Apple',cursive; font-size:clamp(36px,9vw,64px); color:var(--ink); line-height:1; letter-spacing:.005em; padding-left:.15em; }
 
 .metric-from { font-family:var(--font-display); font-size:clamp(24px,5vw,36px); font-weight:600; color:var(--ink-3); }
 .metric-to   { font-family:var(--font-display); font-size:clamp(32px,7vw,48px); font-weight:700; color:var(--accent-ink); }
