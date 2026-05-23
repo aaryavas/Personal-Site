@@ -43,7 +43,7 @@ const d = project.data;
         </div>
 
         <div style="margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap;">
-          <Btn variant="primary" href="https://github.com/aaryavas">View on GitHub &rarr;</Btn>
+          {d.githubUrl && <Btn variant="primary" href={d.githubUrl}>View on GitHub &rarr;</Btn>}
           <Btn href="/projects">&larr; back to all work</Btn>
         </div>
       </div>
