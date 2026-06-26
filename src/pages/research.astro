@@ -1,50 +1,14 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import Tile from '../components/Tile.astro';
 import Sticker from '../components/Sticker.astro';
 import { getCollection } from 'astro:content';
 
 const publications = await getCollection('publications');
 
-const activeResearch = [
-  {
-    lab: 'AI for Software Engineering — UConn',
-    pi: 'Dr. Tingting Yu · Dr. Jinze Liu',
-    role: 'Research Fellow',
-    when: 'May 2025 — present',
-    bullets: [
-      'Bioinformatic experiment process  extraction via multi-agent LLM systems',
-      'Benchmarking autonomous bug-report testing for Android using computer-use agents',
-    ],
-  },
-  {
-    lab: 'EL GATO Lab — UConn',
-    pi: 'Dr. Derek Aguiar',
-    role: 'ML Research Fellow',
-    when: 'Sept 2024 — Aug 2025',
-    bullets: [
-      'Predicting motion outcomes for civil court cases (Beta-Bernoulli, TF-IDF + Word2Vec weighted embeddings)',
-      'Decision Tree, XGBoost, SVM classifiers; up to 65% accuracy',
-      'Anomaly detection with Isolation Forests and One-Class SVM',
-    ],
-  },
-  {
-    lab: 'MOPI-HFRS · UConn Senior Design',
-    pi: 'Dr. Chuxu Zhang',
-    role: 'Project Lead',
-    when: 'Sept 2025 — Apr 2026',
-    bullets: [
-      'Extended a static GNN food recommendation system with A2C RL across 8,170 users × 6,769 items',
-      'Fixed 3 compounding evaluation bugs misreporting accuracy by >50%',
-      'Health alignment 0.39 → 0.73;  A2C critic baseline + BC pretraining',
-    ],
-  },
-];
-
 ---
-<BaseLayout title="Research" description="Publications, active research threads, and coursework by Aarya Vasantlal.">
+<BaseLayout title="Research" description="Publications by Aarya Vasantlal.">
   <section>
-    <div class="kicker" style="margin-top: 24px;">research &middot; publications & active work</div>
+    <div class="kicker" style="margin-top: 24px;">research &middot; publications</div>
     <h1 class="page-title">
       Papers, labs, and<br/>
       <em>things being figured out.</em>
@@ -57,55 +21,35 @@ const activeResearch = [
     <div style="margin-top: 56px;">
       <div class="kicker">publications</div>
       <div class="publications-grid">
-        {publications.map(pub => (
-          <article class="tile" style="position:relative; padding: 22px 24px;">
-            <div class="publication-layout">
-              <div style="flex: 1;">
-                <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 6px;">
-                  <span class="meta">{pub.data.venue} &middot; {pub.data.year}</span>
-                </div>
-                <div class="tile-heading-md" style="line-height: 1.15;">
-                  {pub.data.title}
-                </div>
-                <div class="tile-note" style="margin-top: 4px;">
-                  {pub.data.authors}
-                </div>
-                {pub.data.note && (
-                  <div class="tile-note" style="font-style:normal; color:var(--ink-2); margin-top: 12px; line-height: 1.5; max-width: 70ch;">
-                    {pub.data.note}
+        {publications.map(pub => {
+          const href = pub.data.pdfUrl ?? (pub.data.doi ? `https://doi.org/${pub.data.doi}` : null);
+          return (
+            <article class={`tile${href ? ' tile--link' : ''}`} style="position:relative; padding: 22px 24px;">
+              {href && <a href={href} target="_blank" rel="noopener noreferrer" class="tile-overlay-link" aria-label={pub.data.title} />}
+              <div class="publication-layout">
+                <div style="flex: 1;">
+                  <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 6px;">
+                    <span class="meta">{pub.data.venue} &middot; {pub.data.year}</span>
                   </div>
-                )}
+                  <div class="tile-heading-md" style="line-height: 1.15;">
+                    {pub.data.title}
+                  </div>
+                  <div class="tile-note" style="margin-top: 4px;">
+                    {pub.data.authors}
+                  </div>
+                  {pub.data.note && (
+                    <div class="tile-note" style="font-style:normal; color:var(--ink-2); margin-top: 12px; line-height: 1.5; max-width: 70ch;">
+                      {pub.data.note}
+                    </div>
+                  )}
+                </div>
+                <div style="flex-shrink: 0;">
+                  <Sticker color={pub.data.stickerColor} rotate={3}>{pub.data.status}</Sticker>
+                </div>
               </div>
-              <div style="flex-shrink: 0;">
-                <Sticker color={pub.data.stickerColor} rotate={3}>{pub.data.status}</Sticker>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-
-    <!-- Active research -->
-    <div style="margin-top: 64px;">
-      <div class="kicker">research threads &middot; active</div>
-      <h2 class="research-section-title">
-        Where I&rsquo;m thinking from.
-      </h2>
-      <div class="research-threads-grid">
-        {activeResearch.map((r, i) => (
-          <Tile class={i % 2 ? 'tilt-2' : 'tilt-1'}>
-            <div class="meta">{r.when}</div>
-            <div class="tile-heading-sm" style="margin-top: 8px;">
-              {r.lab}
-            </div>
-            <div class="tile-note" style="margin-top: 4px;">
-              {r.role} &middot; {r.pi}
-            </div>
-            <ul class="tile-list" style="padding-left: 18px; list-style: disc; margin: 14px 0 0;">
-              {r.bullets.map(b => <li style="margin-bottom: 4px;">{b}</li>)}
-            </ul>
-          </Tile>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </div>
 
